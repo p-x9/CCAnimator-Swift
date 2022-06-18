@@ -32,10 +32,12 @@ struct localSettings {
     }
 }
 
-struct tweak: HookGroup {}
+struct customTweak: HookGroup {}
 
 // MARK: ControlCenter background
 class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularControlCenterOverlayViewController> {
+    
+    typealias Group = customTweak
     
     func viewWillDisappear(_ animated: Bool) {
         orig.viewWillDisappear(animated)
@@ -86,6 +88,9 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
 
 // MARK: Item Background
 class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleContentContainerView> {
+    
+    typealias Group = customTweak
+    
     func layoutSubviews() {
         orig.layoutSubviews()
         
@@ -100,6 +105,7 @@ class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleCon
 }
 
 class MediaControlsVolumeSliderView_Hook: ClassHook<MediaControlsVolumeSliderView> {
+    typealias Group = customTweak
     
     func layoutSubviews() {
         orig.layoutSubviews()
@@ -116,6 +122,9 @@ class MediaControlsVolumeSliderView_Hook: ClassHook<MediaControlsVolumeSliderVie
 
 // for ios 14
 class MRUControlCenterView_Hook: ClassHook<MRUControlCenterView> {
+    
+    typealias Group = customTweak
+    
     func layoutSubviews() {
         orig.layoutSubviews()
         
@@ -130,6 +139,9 @@ class MRUControlCenterView_Hook: ClassHook<MRUControlCenterView> {
 }
 
 class MediaControlsMaterialView_Hook: ClassHook<MediaControlsMaterialView> {
+    
+    typealias Group = customTweak
+    
     func layoutSubviews() {
         orig.layoutSubviews()
         
@@ -144,7 +156,7 @@ class MediaControlsMaterialView_Hook: ClassHook<MediaControlsMaterialView> {
 }
 
 class CCUIRoundButton_Hook: ClassHook<CCUIRoundButton> {
-    typealias Group = tweak
+    typealias Group = customTweak
     
     func glyphImage() -> UIImage {
         orig.glyphImage()
@@ -169,7 +181,8 @@ class CCUIRoundButton_Hook: ClassHook<CCUIRoundButton> {
 
 
 class CCUIButtonModuleViewController_Hook: ClassHook<CCUIButtonModuleViewController> {
-    typealias Group = tweak
+    
+    typealias Group = customTweak
     
     func setSelected(_ selected: Bool) {
         orig.setSelected(selected)
@@ -207,7 +220,7 @@ class CCUIButtonModuleViewController_Hook: ClassHook<CCUIButtonModuleViewControl
 
 
 class CCUIButtonModuleView_Hook: ClassHook<CCUIButtonModuleView> {
-    typealias Group = tweak
+    typealias Group = customTweak
     
     func initWithFrame(_ frame: CGRect) -> UIControl {
         let target = orig.initWithFrame(frame)
@@ -241,7 +254,7 @@ class CCUIButtonModuleView_Hook: ClassHook<CCUIButtonModuleView> {
 }
 
 class CCUICAPackageView_Hook: ClassHook<CCUICAPackageView> {
-    typealias Group = tweak
+    typealias Group = customTweak
     
     // orion:new
     func applyFigure(color: UIColor, for layers: [CALayer]?) {
@@ -272,6 +285,9 @@ class CCUICAPackageView_Hook: ClassHook<CCUICAPackageView> {
 
 struct CCAnimator: Tweak {
     init() {
-        tweak().activate()
+        if localSettings.isTweakEnabled && localSettings.isCustomEnabled {
+            customTweak().activate()
+        }
+        
     }
 }

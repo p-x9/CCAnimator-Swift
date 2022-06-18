@@ -138,6 +138,9 @@
     double _expandedContinuousCornerRadius;
 }
 
+// new
+- (void)animate;
+
 @end
 
 

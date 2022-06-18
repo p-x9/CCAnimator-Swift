@@ -9,13 +9,64 @@ struct localSettings {
     static var scale: CGFloat = 0.5
     
     static var itemTintColorCode: String = "#00FF00FF"
+    static var itemBackgroundColorCode: String = "#FF0000AA"
     
     static var itemTintColor: UIColor {
         UIColor(rgba: Self.itemTintColorCode)
     }
+    
+    static var itemBackgroundColor: UIColor {
+        UIColor(rgba: Self.itemBackgroundColorCode)
+    }
 }
 
 struct tweak: HookGroup {}
+
+class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleContentContainerView> {
+    func layoutSubviews() {
+        orig.layoutSubviews()
+        
+        let materialView = Ivars<UIView>(target)._moduleMaterialView
+        
+        materialView.layer.setValue(false, forKey: "enabled")
+        materialView.backgroundColor = localSettings.itemBackgroundColor
+    }
+}
+
+class MediaControlsVolumeSliderView_Hook: ClassHook<MediaControlsVolumeSliderView> {
+    
+    func layoutSubviews() {
+        orig.layoutSubviews()
+        
+        let materialView = Ivars<UIView>(target)._materialView
+        
+        materialView.layer.setValue(false, forKey: "enabled")
+        materialView.backgroundColor = localSettings.itemBackgroundColor
+    }
+}
+
+// for ios 14
+class MRUControlCenterView_Hook: ClassHook<MRUControlCenterView> {
+    func layoutSubviews() {
+        orig.layoutSubviews()
+        
+        let materialView = target.materialView
+        
+        materialView?.layer.setValue(false, forKey: "enabled")
+        materialView?.backgroundColor = localSettings.itemBackgroundColor
+    }
+}
+
+class MediaControlsMaterialView_Hook: ClassHook<MediaControlsMaterialView> {
+    func layoutSubviews() {
+        orig.layoutSubviews()
+        
+        let materialView = Ivars<UIView>(target)._backgroundView
+        
+        materialView.layer.setValue(false, forKey: "enabled")
+        materialView.backgroundColor = localSettings.itemBackgroundColor
+    }
+}
 
 class CCUIRoundButton_Hook: ClassHook<CCUIRoundButton> {
     typealias Group = tweak

@@ -112,3 +112,72 @@
 -(void)_buttonTouchDown:(id)arg1 forEvent:(id)arg2 ;
 -(void)_buttonTapped:(id)arg1 forEvent:(id)arg2 ;
 @end
+
+
+@interface CCUIContentModuleContentContainerView : UIView {
+    BOOL _expanded;
+    MTMaterialView* _moduleMaterialView;
+    BOOL _moduleProvidesOwnPlatter;
+    double _compactContinuousCornerRadius;
+    double _expandedContinuousCornerRadius;
+}
+
+@end
+
+
+@interface MediaControlsVolumeSliderView : UIView {
+    
+    UIView* _orangeValueView;
+    BOOL _didAcknowledgeThreshold;
+    BOOL _didHitThreshold;
+    BOOL _didTakeActionToAcknowledge;
+    UIView* _materialView;
+    BOOL _euDevice;
+    BOOL _euVolumeLimitEnforced;
+    float _euVolumeLimit;
+    
+}
+@end
+
+//ios14.4
+@interface MRUControlCenterView : UIView {
+    
+    BOOL _transitioning;
+    BOOL _showMoreButton;
+    BOOL _showAlertView;
+    UIView* _contentView;
+    UIView* _alertView;
+    UIView* _containerView;
+    UICollectionView* _collectionView;
+    UICollectionViewFlowLayout* _collectionViewLayout;
+    long long _state;
+    double _cornerRadius;
+    UIView* _materialView;
+    CGSize _forcedContentSize;
+    CGRect _transitionFrame;
+}
+@property (nonatomic,retain) UIView * materialView;
+@property (nonatomic,retain) UIView * contentView;
+@property (nonatomic,retain) UIView * alertView;
+@property (nonatomic,readonly) UIView * containerView;
+@property (nonatomic,readonly) UICollectionView * collectionView;
+@property (nonatomic,readonly) UICollectionViewFlowLayout * collectionViewLayout;
+@property (assign,nonatomic) long long state;
+@property (assign,getter=isTransitioning,nonatomic) BOOL transitioning;
+@property (assign,nonatomic) CGRect transitionFrame;
+@property (assign,nonatomic) double cornerRadius;
+@property (assign,nonatomic) BOOL showMoreButton;
+@property (assign,nonatomic) BOOL showAlertView;
+@property (assign,nonatomic) CGSize forcedContentSize;
+
+-(void)setCornerRadius:(double)arg1 ;
+@end
+
+
+@interface MediaControlsMaterialView : UIView {
+    
+    UIView* _backgroundView;
+    UIView* _highlightView;
+    BOOL _highlighted;
+}
+@end

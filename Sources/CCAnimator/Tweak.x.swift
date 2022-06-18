@@ -148,8 +148,12 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
     
     func endPresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
         orig.endPresentationWithLocation(point, translation: translation, velocity: velocity)
+    }
+    
+    func cancelPresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
+        orig.cancelPresentationWithLocation(point, translation: translation, velocity: velocity)
         
-        target.view.backgroundColor = localSettings.ccBackgroundColor
+        target.view.backgroundColor = nil
     }
     
     func _dismissalPanGestureRecognizerChanged(_ sender: UIPanGestureRecognizer) {
@@ -174,6 +178,13 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
         orig.dismiss(animated: flag, completion: completion)
         
         target.view.layer.backgroundColor = nil
+    }
+    
+    @objc(presentAnimated:withCompletionHandler:)
+    func present(animated flag: Bool, completion: (() -> Void)?) {
+        orig.present(animated: flag, completion: completion)
+        
+        target.view.backgroundColor = localSettings.ccBackgroundColor
     }
 }
 

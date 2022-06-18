@@ -49,6 +49,7 @@
 
 -(void)beginPresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
 -(void)updatePresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
+-(void)cancelPresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
 -(void)endPresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
 -(void)_dismissalPanGestureRecognizerChanged:(id)arg1 ;
 -(void)_dismissalPanGestureRecognizerEnded:(id)arg1 ;

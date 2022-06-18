@@ -10,6 +10,8 @@ struct localSettings {
     
     static var itemTintColorCode: String = "#00FF00FF"
     static var itemBackgroundColorCode: String = "#FF0000AA"
+    static var itemBorderColorCode: String = "#FFFFFFFF"
+    static var itemBorderWidth: CGFloat = 1
     
     static var itemTintColor: UIColor {
         UIColor(rgba: Self.itemTintColorCode)
@@ -17,6 +19,10 @@ struct localSettings {
     
     static var itemBackgroundColor: UIColor {
         UIColor(rgba: Self.itemBackgroundColorCode)
+    }
+    
+    static var itemBorderColor: UIColor {
+        UIColor(rgba: Self.itemBorderColorCode)
     }
 }
 
@@ -30,6 +36,9 @@ class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleCon
         
         materialView.layer.setValue(false, forKey: "enabled")
         materialView.backgroundColor = localSettings.itemBackgroundColor
+        
+        materialView.layer.borderWidth = localSettings.itemBorderWidth
+        materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
     }
 }
 
@@ -42,6 +51,9 @@ class MediaControlsVolumeSliderView_Hook: ClassHook<MediaControlsVolumeSliderVie
         
         materialView.layer.setValue(false, forKey: "enabled")
         materialView.backgroundColor = localSettings.itemBackgroundColor
+        
+        materialView.layer.borderWidth = localSettings.itemBorderWidth
+        materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
     }
 }
 
@@ -54,6 +66,9 @@ class MRUControlCenterView_Hook: ClassHook<MRUControlCenterView> {
         
         materialView?.layer.setValue(false, forKey: "enabled")
         materialView?.backgroundColor = localSettings.itemBackgroundColor
+        
+        materialView?.layer.borderWidth = localSettings.itemBorderWidth
+        materialView?.layer.borderColor = localSettings.itemBorderColor.cgColor
     }
 }
 
@@ -65,6 +80,9 @@ class MediaControlsMaterialView_Hook: ClassHook<MediaControlsMaterialView> {
         
         materialView.layer.setValue(false, forKey: "enabled")
         materialView.backgroundColor = localSettings.itemBackgroundColor
+        
+        materialView.layer.borderWidth = localSettings.itemBorderWidth
+        materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
     }
 }
 

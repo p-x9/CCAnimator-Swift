@@ -1,0 +1,4 @@
+module CCAnimatorC {
+    umbrella "."
+    export *
+}

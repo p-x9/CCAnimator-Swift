@@ -60,11 +60,11 @@ struct localSettings {
 let AnimationNotification = NSNotification.Name(rawValue: "com.p-x9.ccanimator.animation")
 
 struct customTweak: HookGroup {}
+struct animationTweak: HookGroup {}
 
-// MARK: ControlCenter background
-class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularControlCenterOverlayViewController> {
+class CCUIModularControlCenterOverlayViewController_Anim_Hook: ClassHook<CCUIModularControlCenterOverlayViewController> {
     
-    typealias Group = customTweak
+    typealias Group = animationTweak
     
     @Property(.atomic) var animationTimer: Timer? = nil
     
@@ -83,9 +83,58 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
     func viewWillDisappear(_ animated: Bool) {
         orig.viewWillDisappear(animated)
         
-        target.view.layer.backgroundColor = nil
-        
         animationTimer?.invalidate()
+    }
+}
+
+class CCUIContentModuleContentContainerView_Anim_Hook: ClassHook<CCUIContentModuleContentContainerView> {
+    
+    typealias Group = animationTweak
+    
+    func initWithFrame(_ frame: CGRect) -> UIControl {
+        let target = orig.initWithFrame(frame)
+        
+        NotificationCenter.default.addObserver(forName: AnimationNotification, object: nil, queue: .main) { _ in
+            self.target.animate()
+        }
+        
+        return target
+    }
+    
+    func deinitializer() -> DeinitPolicy {
+        let policy = orig.deinitializer()
+        
+        NotificationCenter.default.removeObserver(target, name: AnimationNotification, object: nil)
+        
+        return policy
+    }
+    
+    // orion:new
+    @objc
+    func animate() {
+        guard localSettings.isAnimationEnabled else {
+            return
+        }
+        
+        var options: UIView.AnimationOptions = [localSettings.animation]
+        if localSettings.isAnimationAutoReverseEnabled {
+            options.insert(.autoreverse)
+        }
+        
+        UIView.transition(with: target.superview!, duration: localSettings.animationDuration, options: options, animations: nil)
+    }
+}
+
+
+// MARK: ControlCenter background
+class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularControlCenterOverlayViewController> {
+    
+    typealias Group = customTweak
+    
+    func viewWillDisappear(_ animated: Bool) {
+        orig.viewWillDisappear(animated)
+        
+        target.view.layer.backgroundColor = nil
     }
     
     func updatePresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
@@ -134,16 +183,6 @@ class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleCon
     
     typealias Group = customTweak
     
-    func initWithFrame(_ frame: CGRect) -> UIControl {
-        let target = orig.initWithFrame(frame)
-        
-        NotificationCenter.default.addObserver(forName: AnimationNotification, object: nil, queue: .main) { _ in
-            self.target.animate()
-        }
-        
-        return target
-    }
-    
     func layoutSubviews() {
         orig.layoutSubviews()
         
@@ -154,29 +193,6 @@ class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleCon
         
         materialView.layer.borderWidth = localSettings.itemBorderWidth
         materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
-    }
-    
-    func deinitializer() -> DeinitPolicy {
-        let policy = orig.deinitializer()
-        
-        NotificationCenter.default.removeObserver(target, name: AnimationNotification, object: nil)
-        
-        return policy
-    }
-    
-    // orion:new
-    @objc
-    func animate() {
-        guard localSettings.isAnimationEnabled else {
-            return
-        }
-        
-        var options: UIView.AnimationOptions = [localSettings.animation]
-        if localSettings.isAnimationAutoReverseEnabled {
-            options.insert(.autoreverse)
-        }
-        
-        UIView.transition(with: target.superview!, duration: localSettings.animationDuration, options: options, animations: nil)
     }
     
 }
@@ -362,8 +378,15 @@ class CCUICAPackageView_Hook: ClassHook<CCUICAPackageView> {
 
 struct CCAnimator: Tweak {
     init() {
-        if localSettings.isTweakEnabled && localSettings.isCustomEnabled {
+        guard localSettings.isTweakEnabled else {
+            return
+        }
+        if localSettings.isCustomEnabled {
             customTweak().activate()
+        }
+        
+        if localSettings.isAnimationEnabled {
+            animationTweak().activate()
         }
         
     }

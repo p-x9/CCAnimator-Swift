@@ -31,13 +31,29 @@
 @end
 
 
-@interface CCUIModularControlCenterOverlayViewController : UIViewController
+@interface CCUIModularControlCenterOverlayViewController : UIViewController {
+    MTMaterialView* _backgroundView;
+    UIView* _containerView;
+    
+    UIPanGestureRecognizer* _headerPocketViewDismissalPanGesture;
+    UITapGestureRecognizer* _headerPocketViewDismissalTapGesture;
+    
+    UIPanGestureRecognizer* _collectionViewDismissalPanGesture;
+    UITapGestureRecognizer* _collectionViewDismissalTapGesture;
+    UIPanGestureRecognizer* _collectionViewScrollPanGesture;
+}
 
 @property (nonatomic,readonly) MTMaterialView * overlayBackgroundView;
 @property (nonatomic,readonly) UIScrollView * overlayScrollView;
+@property (nonatomic,readonly) UIView * overlayContainerView;
 
+-(void)beginPresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
+-(void)updatePresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
+-(void)endPresentationWithLocation:(CGPoint)arg1 translation:(CGPoint)arg2 velocity:(CGPoint)arg3 ;
 -(void)_dismissalPanGestureRecognizerChanged:(id)arg1 ;
-
+-(void)_dismissalPanGestureRecognizerEnded:(id)arg1 ;
+-(void)_handleDismissalTapGestureRecognizer:(id)arg1 ;
+-(void)dismissAnimated:(BOOL)arg1 withCompletionHandler:(/*^block*/id)arg2 ;
 @end
 
 

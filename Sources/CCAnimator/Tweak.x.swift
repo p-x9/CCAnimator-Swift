@@ -13,6 +13,8 @@ struct localSettings {
     static var itemBorderColorCode: String = "#FFFFFFFF"
     static var itemBorderWidth: CGFloat = 1
     
+    static var ccBackgroundColorCode: String = "#000088FF"
+    
     static var itemTintColor: UIColor {
         UIColor(rgba: Self.itemTintColorCode)
     }
@@ -24,10 +26,65 @@ struct localSettings {
     static var itemBorderColor: UIColor {
         UIColor(rgba: Self.itemBorderColorCode)
     }
+    
+    static var ccBackgroundColor: UIColor {
+        UIColor(rgba: Self.ccBackgroundColorCode)
+    }
 }
 
 struct tweak: HookGroup {}
 
+// MARK: ControlCenter background
+class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularControlCenterOverlayViewController> {
+    
+    func viewWillDisappear(_ animated: Bool) {
+        orig.viewWillDisappear(animated)
+        
+        target.view.layer.backgroundColor = nil
+    }
+    
+    func updatePresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
+        let alpha = 1 - (point.y / target.view.frame.height)
+        let color = localSettings.ccBackgroundColor.withAlphaComponent(alpha)
+        
+        target.view.layer.backgroundColor = color.cgColor
+        
+        orig.updatePresentationWithLocation(point, translation: translation, velocity: velocity)
+    }
+    
+    func endPresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
+        orig.endPresentationWithLocation(point, translation: translation, velocity: velocity)
+        
+        target.view.backgroundColor = localSettings.ccBackgroundColor
+    }
+    
+    func _dismissalPanGestureRecognizerChanged(_ sender: UIPanGestureRecognizer) {
+        let translatedPoint = sender.translation(in: target.view)
+
+        let alpha = 1 - (translatedPoint.y / target.view.frame.height)
+        let color = localSettings.ccBackgroundColor.withAlphaComponent(alpha)
+
+        target.view.layer.backgroundColor = color.cgColor
+
+        orig._dismissalPanGestureRecognizerChanged(sender)
+    }
+    
+    func _handleDismissalTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        orig._handleDismissalTapGestureRecognizer(sender)
+        
+        target.view.layer.backgroundColor = nil
+    }
+    
+    @objc(dismissAnimated:withCompletionHandler:)
+    func dismiss(animated flag: Bool, completion: (() -> Void)?) {
+        orig.dismiss(animated: flag, completion: completion)
+        
+        target.view.layer.backgroundColor = nil
+    }
+}
+
+
+// MARK: Item Background
 class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleContentContainerView> {
     func layoutSubviews() {
         orig.layoutSubviews()

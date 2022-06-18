@@ -1,4 +1,4 @@
-DEBUG = 0
+DEBUG = 1
 GO_EASY_ON_ME := 1
 
 ARCHS = arm64 arm64e

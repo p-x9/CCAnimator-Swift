@@ -18,5 +18,5 @@ CCAnimator_CFLAGS = -fobjc-arc -ISources/CCAnimatorC/include
 $(TWEAK_NAME)_FRAMEWORKS = UIKit QuartzCore
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-SUBPROJECTS += ccpreferences
+SUBPROJECTS += ccapreferences
 include $(THEOS_MAKE_PATH)/aggregate.mk

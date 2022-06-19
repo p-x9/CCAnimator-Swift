@@ -1,5 +1,5 @@
 import Preferences
-import CCPreferencesC
+import CCAPreferencesC
 
 class RootListController: PSListController {
     override var specifiers: NSMutableArray? {

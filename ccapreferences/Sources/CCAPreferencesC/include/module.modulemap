@@ -1,4 +1,4 @@
-module CCPreferencesC {
+module CCAPreferencesC {
     umbrella "."
     export *
 }

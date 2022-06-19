@@ -65,23 +65,23 @@ let swiftFlags: [String] = libFlags + [
 ]
 
 let package = Package(
-    name: "Preferences",
+    name: "CCPreferences",
     platforms: [.iOS("12.2")],
     products: [
         .library(
-            name: "Preferences",
-            targets: ["Preferences"]
+            name: "CCPreferences",
+            targets: ["CCPreferences"]
         ),
     ],
     targets: [
         .target(
-            name: "PreferencesC",
+            name: "CCPreferencesC",
             cSettings: [.unsafeFlags(cFlags)],
             cxxSettings: [.unsafeFlags(cxxFlags)]
         ),
         .target(
-            name: "Preferences",
-            dependencies: ["PreferencesC"],
+            name: "CCPreferences",
+            dependencies: ["CCPreferencesC"],
             swiftSettings: [.unsafeFlags(swiftFlags)]
         ),
     ]

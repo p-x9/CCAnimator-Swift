@@ -13,9 +13,10 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME = CCAnimator
 
 CCAnimator_FILES = $(shell find Sources/CCAnimator -name '*.swift') $(shell find Sources/CCAnimatorC -name '*.m' -o -name '*.c' -o -name '*.mm' -o -name '*.cpp')
-CCAnimator_SWIFTFLAGS = -ISources/CCAnimatorC/include
+CCAnimator_SWIFTFLAGS = -ISources/CCAnimatorC/include -I.sparkcolorheaders
 CCAnimator_CFLAGS = -fobjc-arc -ISources/CCAnimatorC/include
 $(TWEAK_NAME)_FRAMEWORKS = UIKit QuartzCore
+$(TWEAK_NAME)_LIBRARIES = sparkcolourpicker
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += ccapreferences

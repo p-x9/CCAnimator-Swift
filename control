@@ -6,4 +6,4 @@ Description: An awesome Orion tweak!
 Maintainer: p-x9
 Author: p-x9
 Section: Tweaks
-Depends: ${ORION}, firmware (>= 12.2)
+Depends: ${ORION}, firmware (>= 12.2), com.spark.libsparkcolourpicker,  ws.hbang.common (>= 1.17)

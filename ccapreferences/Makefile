@@ -14,8 +14,9 @@ $(BUNDLE_NAME)_FILES = $(shell find Sources/CCAPreferences -name '*.swift') $(sh
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit CoreGraphics
 $(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
 $(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
+$(BUNDLE_NAME)_LIBRARIES = sparkcolourpicker
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
-$(BUNDLE_NAME)_SWIFTFLAGS = -ISources/CCAPreferencesC/include
+$(BUNDLE_NAME)_SWIFTFLAGS = -ISources/CCAPreferencesC/include -I.sparkcolorheaders
 $(BUNDLE_NAME)_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/bundle.mk

@@ -3,41 +3,40 @@ import CCAnimatorC
 import UIKit
 
 
-struct localSettings {
-    static var isTweakEnabled = true
-    static var isCustomEnabled = true
-    static var scale: CGFloat = 0.5
+struct Settings: Codable {
+    var isTweakEnabled = true
+    var isCustomEnabled = true
     
-    static var itemTintColorCode: String = "#00FF00FF"
-    static var itemBackgroundColorCode: String = "#FF0000AA"
-    static var itemBorderColorCode: String = "#FFFFFFFF"
-    static var itemBorderWidth: CGFloat = 1
+    var itemTintColorCode: String = "#00FF00"
+    var itemBackgroundColorCode: String = "#FF0000"
+    var itemBorderColorCode: String = "#FFFFFF"
+    var itemBorderWidth: CGFloat = 1
     
-    static var ccBackgroundColorCode: String = "#000088FF"
+    var ccBackgroundColorCode: String = "#000088"
     
-    static var isAnimationEnabled: Bool = true
-    static var animationRawValue: Int = 0
-    static var isAnimationAutoReverseEnabled: Bool = true
-    static var animationDuration: TimeInterval = 1
-    static var animationInterval: TimeInterval = 10
+    var isAnimationEnabled: Bool = true
+    var animationRawValue: Int = 0
+    var isAnimationAutoReverseEnabled: Bool = true
+    var animationDuration: TimeInterval = 1
+    var animationInterval: TimeInterval = 10
     
-    static var itemTintColor: UIColor {
-        UIColor(rgba: Self.itemTintColorCode)
+    var itemTintColor: UIColor {
+        SparkColourPickerUtils.colour(with: self.itemTintColorCode, withFallbackColour: .white)
     }
     
-    static var itemBackgroundColor: UIColor {
-        UIColor(rgba: Self.itemBackgroundColorCode)
+    var itemBackgroundColor: UIColor {
+        SparkColourPickerUtils.colour(with: self.itemBackgroundColorCode, withFallbackColour: .blue)
     }
     
-    static var itemBorderColor: UIColor {
-        UIColor(rgba: Self.itemBorderColorCode)
+    var itemBorderColor: UIColor {
+        SparkColourPickerUtils.colour(with: self.itemBorderColorCode, withFallbackColour: .white)
     }
     
-    static var ccBackgroundColor: UIColor {
-        UIColor(rgba: Self.ccBackgroundColorCode)
+    var ccBackgroundColor: UIColor {
+        SparkColourPickerUtils.colour(with: self.ccBackgroundColorCode, withFallbackColour: .systemPink)
     }
     
-    private static let animations: [UIView.AnimationOptions] =
+    static let animations: [UIView.AnimationOptions] =
         [
             .transitionFlipFromLeft,
             .transitionFlipFromRight,
@@ -49,13 +48,15 @@ struct localSettings {
         ]
     
     
-    static var animation: UIView.AnimationOptions {
-        if animations.indices.contains(animationRawValue) {
-            return animations[animationRawValue]
+    var animation: UIView.AnimationOptions {
+        if Self.animations.indices.contains(animationRawValue) {
+            return Self.animations[animationRawValue]
         }
-        return animations[0]
+        return Self.animations[0]
     }
 }
+
+var localSettings = Settings()
 
 let AnimationNotification = NSNotification.Name(rawValue: "com.p-x9.ccanimator.animation")
 
@@ -387,11 +388,41 @@ class CCUICAPackageView_Hook: ClassHook<CCUICAPackageView> {
 }
 
 
+func readPrefs() {
+    let path = "/var/mobile/Library/Preferences/com.p-x9.ccanimator.pref.plist"
+    let url = URL(fileURLWithPath: path)
+    
+    //Reading values
+    guard let data = try? Data(contentsOf: url) else {
+        return
+    }
+    let decoder = PropertyListDecoder()
+    localSettings =  (try? decoder.decode(Settings.self, from: data)) ?? Settings()
+}
+
+func settingChanged() {
+    readPrefs()
+}
+
+func observePrefsChange() {
+    let NOTIFY = "com.p-x9.ccanimator.prefschanged" as CFString
+    
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                    nil, { _, _, _, _, _ in
+        settingChanged()
+    }, NOTIFY, nil, CFNotificationSuspensionBehavior.deliverImmediately)
+}
+
+
 struct CCAnimator: Tweak {
     init() {
         guard localSettings.isTweakEnabled else {
             return
         }
+        
+        readPrefs()
+        observePrefsChange()
+        
         if localSettings.isCustomEnabled {
             customTweak().activate()
         }

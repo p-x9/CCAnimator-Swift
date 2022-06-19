@@ -49,7 +49,7 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.titleLabel sizeToFit];
 
-    self.subTitleLabel.text = @"Adjust the quality of the screenshot。";
+    self.subTitleLabel.text = @"Customize Control Center UI.";
     self.subTitleLabel.textColor = UIColor.grayColor;
     self.subTitleLabel.font = [UIFont systemFontOfSize:14];
     self.subTitleLabel.textAlignment = NSTextAlignmentCenter;

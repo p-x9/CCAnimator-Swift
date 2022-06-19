@@ -1,4 +1,5 @@
 @import UIKit;
+#import "sparkcolorheaders/SparkColourPickerUtils.h"
 
 @class CCUICAPackageView;
 @interface CCUIRoundButton : UIControl

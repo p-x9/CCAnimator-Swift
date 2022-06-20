@@ -9,7 +9,7 @@ class RootListController: PSListController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let respringButtonItem = UIBarButtonItem(title: "Respring", style: .plain, target: self, action: #selector(srespring))
+        let respringButtonItem = UIBarButtonItem(title: "Respring", style: .plain, target: self, action: #selector(respring))
         navigationItem.rightBarButtonItem = respringButtonItem
     }
     
@@ -47,8 +47,8 @@ class RootListController: PSListController {
     }
     
     @objc
-    func srespring() {
-        respring()
+    func respring() {
+        CCAPreferencesC.respring()
     }
     
     @objc

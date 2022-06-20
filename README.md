@@ -12,7 +12,7 @@ Tweak which allows customizing the UI of the control center and adding animation
 ### Animation
 |  A  |  B  |
 | ---- | ---- |
-|  https://user-images.githubusercontent.com/50244599/174617496-d4a908b2-b78b-41d9-b767-1da1261a00d0.MOV  |  ![B](https://user-images.githubusercontent.com/50244599/174617644-3ef717bf-4c08-4c3b-847d-197bdcc31624.jpeg)  |
+|  ![demo](https://user-images.githubusercontent.com/50244599/174620563-b68cce36-1029-4263-bd6d-3dc739d7e6a0.gif) |  ![B](https://user-images.githubusercontent.com/50244599/174623465-b88f59c0-f28a-4e38-b580-15bcfd54f704.jpeg) |
 
 ## Feature
 ### Custom UI

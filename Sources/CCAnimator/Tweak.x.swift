@@ -14,7 +14,7 @@ class CCUIModularControlCenterOverlayViewController_Anim_Hook: ClassHook<CCUIMod
     
     typealias Group = animationTweak
     
-    @Property(.atomic) var animationTimer: Timer? = nil
+    @Property(.nonatomic) var animationTimer: Timer? = nil
     
     func viewDidAppear(_ animated: Bool) {
         orig.viewDidAppear(animated)

@@ -19,6 +19,7 @@ struct Settings: Codable {
         case itemBackgroundColorCode
         case itemBorderColorCode
         case itemBorderWidth
+        case itemCornerRadius
         
         case ccBackgroundColorCode
         
@@ -37,6 +38,7 @@ struct Settings: Codable {
     var itemBackgroundColorCode: String = "#D00090"
     var itemBorderColorCode: String = "#FFFFFF"
     var itemBorderWidth: CGFloat = 1
+    var itemCornerRadius: CGFloat = 19
     
     var ccBackgroundColorCode: String = "#0000FF:0.50"
     
@@ -58,6 +60,7 @@ struct Settings: Codable {
         itemBackgroundColorCode = try container.decodeIfPresent(String.self, forKey: .itemBackgroundColorCode) ?? "#D00090"
         itemBorderColorCode = try container.decodeIfPresent(String.self, forKey: .itemBorderColorCode) ?? "#FFFFFF"
         itemBorderWidth = try container.decodeIfPresent(CGFloat.self, forKey: .itemBorderWidth) ?? 1
+        itemCornerRadius = try container.decodeIfPresent(CGFloat.self, forKey: .itemCornerRadius) ?? 19
         
         ccBackgroundColorCode = try container.decodeIfPresent(String.self, forKey: .ccBackgroundColorCode) ?? "#0000FF:0.50"
         

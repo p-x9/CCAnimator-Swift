@@ -139,14 +139,54 @@
     double _compactContinuousCornerRadius;
     double _expandedContinuousCornerRadius;
 }
+-(double)expandedContinuousCornerRadius;
+-(double)compactContinuousCornerRadius;
 
+-(void)transitionToExpandedMode:(BOOL)arg1 ;
+-(void)_transitionToExpandedMode:(BOOL)arg1 force:(BOOL)arg2 ;
+-(void)didEndTransitionToExpandedMode:(BOOL)arg1 ;
+
+-(void)setExpandedContinuousCornerRadius:(double)arg1 ;
+-(void)setCompactContinuousCornerRadius:(double)arg1 ;
 // new
 - (void)animate;
 
 @end
 
+@interface CCUIContinuousSliderView : UIView <UIGestureRecognizerDelegate> {
+    
+    UIView* _valueIndicatorClippingView;
+    UIView* _backgroundView;
+    double _startingLength;
+    float _startingValue;
+    BOOL _gestureStartedInside;
+    UIPanGestureRecognizer* _valueChangeGestureRecognizer;
+    double _continuousSliderCornerRadius;
+    unsigned long long _axis;
+    
+}
 
-@interface MediaControlsVolumeSliderView : UIView {
+@property (assign,nonatomic) double continuousSliderCornerRadius;
+@property (assign,nonatomic) unsigned long long axis;
+@property (nonatomic,readonly) UIView * valueIndicatorClippingView;
+-(id)topLevelBlockingGestureRecognizers;
+-(void)_handleValueChangeGestureRecognizer:(id)arg1 ;
+-(double)sliderLengthForValue:(float)arg1 ;
+-(float)_valueForTouchTranslation:(CGPoint)arg1 ;
+-(void)_beginTrackingWithGestureRecognizer:(id)arg1 ;
+-(unsigned long long)axis;
+-(void)setAxis:(unsigned long long)arg1 ;
+-(void)_updateValueForPanGestureRecognizer:(id)arg1 forContinuedGesture:(BOOL)arg2 ;
+-(void)_endTrackingWithGestureRecognizer:(id)arg1 ;
+-(double)continuousSliderCornerRadius;
+-(float)filteredValueForValue:(float)arg1 ;
+-(CGPoint)glyphCenter;
+-(void)setContinuousSliderCornerRadius:(double)arg1 ;
+-(UIView *)valueIndicatorClippingView;
+-(void)_continueTrackingWithGestureRecognizer:(id)arg1 ;
+@end
+
+@interface MediaControlsVolumeSliderView : CCUIContinuousSliderView {
     
     UIView* _orangeValueView;
     BOOL _didAcknowledgeThreshold;

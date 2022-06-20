@@ -71,7 +71,19 @@
 @end
 
 
-@interface CCUIButtonModuleView : UIControl
+@interface CCUIButtonModuleView : UIControl {
+    UIView* _highlightedBackgroundView;
+    UIImageView* _glyphImageView;
+    CCUICAPackageView* _glyphPackageView;
+    UIImage* _glyphImage;
+    UIColor* _glyphColor;
+    UIImage* _selectedGlyphImage;
+    UIColor* _selectedGlyphColor;
+    double _glyphAlpha;
+    double _glyphScale;
+    NSString* _glyphState;
+    NSDirectionalEdgeInsets _contentEdgeInsets;
+}
 
 @property (nonatomic,retain) UIImage * glyphImage;
 @property (nonatomic,retain) UIColor * glyphColor;

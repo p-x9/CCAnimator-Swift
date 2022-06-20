@@ -184,7 +184,7 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
     }
     
     func updatePresentationWithLocation(_ point: CGPoint, translation: CGPoint, velocity: CGPoint) {
-        let alpha = 1 - (point.y / target.view.frame.height)
+        let alpha = (1 - (point.y / target.view.frame.height)) * localSettings.ccBackgroundColor.alphaComponent
         let color = localSettings.ccBackgroundColor.withAlphaComponent(alpha)
         
         target.view.layer.backgroundColor = color.cgColor
@@ -205,7 +205,7 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
     func _dismissalPanGestureRecognizerChanged(_ sender: UIPanGestureRecognizer) {
         let translatedPoint = sender.translation(in: target.view)
 
-        let alpha = 1 - (translatedPoint.y / target.view.frame.height)
+        let alpha = (1 - (translatedPoint.y / target.view.frame.height)) * localSettings.ccBackgroundColor.alphaComponent
         let color = localSettings.ccBackgroundColor.withAlphaComponent(alpha)
 
         target.view.layer.backgroundColor = color.cgColor

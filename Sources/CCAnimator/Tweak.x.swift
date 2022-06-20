@@ -384,12 +384,12 @@ func observePrefsChange() {
 
 struct CCAnimator: Tweak {
     init() {
+        readPrefs()
+        observePrefsChange()
+        
         guard localSettings.isTweakEnabled else {
             return
         }
-        
-        readPrefs()
-        observePrefsChange()
         
         if localSettings.isCustomEnabled {
             customTweak().activate()

@@ -297,6 +297,10 @@ class CCUIButtonModuleView_Hook: ClassHook<CCUIButtonModuleView> {
     
     func initWithFrame(_ frame: CGRect) -> UIControl {
         let target = orig.initWithFrame(frame)
+        
+        let highlightedBackgroundView = Ivars<UIView>(target)._highlightedBackgroundView
+        highlightedBackgroundView.layer.cornerRadius = localSettings.itemCornerRadius
+        
         return target
     }
     

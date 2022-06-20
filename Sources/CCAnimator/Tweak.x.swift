@@ -152,6 +152,9 @@ class CCUIContentModuleContentContainerView_Hook: ClassHook<CCUIContentModuleCon
         
         materialView.layer.borderWidth = localSettings.itemBorderWidth
         materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
+        materialView.layer.cornerRadius = localSettings.itemCornerRadius
+        target.layer.cornerRadius = localSettings.itemCornerRadius
+        target.clipsToBounds = true
     }
     
 }
@@ -169,6 +172,9 @@ class MediaControlsVolumeSliderView_Hook: ClassHook<MediaControlsVolumeSliderVie
         
         materialView.layer.borderWidth = localSettings.itemBorderWidth
         materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
+        materialView.layer.cornerRadius = localSettings.itemCornerRadius
+        target.layer.cornerRadius = localSettings.itemCornerRadius
+        target.clipsToBounds = true
     }
 }
 
@@ -187,6 +193,9 @@ class MRUControlCenterView_Hook: ClassHook<MRUControlCenterView> {
         
         materialView?.layer.borderWidth = localSettings.itemBorderWidth
         materialView?.layer.borderColor = localSettings.itemBorderColor.cgColor
+        materialView?.layer.cornerRadius = localSettings.itemCornerRadius
+        target.layer.cornerRadius = localSettings.itemCornerRadius
+        target.clipsToBounds = true
     }
 }
 
@@ -204,6 +213,9 @@ class MediaControlsMaterialView_Hook: ClassHook<MediaControlsMaterialView> {
         
         materialView.layer.borderWidth = localSettings.itemBorderWidth
         materialView.layer.borderColor = localSettings.itemBorderColor.cgColor
+        materialView.layer.cornerRadius = localSettings.itemCornerRadius
+        target.layer.cornerRadius = localSettings.itemCornerRadius
+        target.clipsToBounds = true
     }
 }
 

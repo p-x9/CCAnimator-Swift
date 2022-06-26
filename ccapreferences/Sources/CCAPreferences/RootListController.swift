@@ -36,7 +36,7 @@ class RootListController: PSListController {
         let key = specifier.properties.object(forKey: "key") as Any
         let `default` = specifier.properties.object(forKey: "default") as Any
         
-        return prefs?.object(forKey: key) ?? prefs?.object(forKey: `default`)
+        return prefs?.object(forKey: key) ?? `default`
     }
     
     override func setPreferenceValue(_ value: Any!, specifier: PSSpecifier!) {

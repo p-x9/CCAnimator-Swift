@@ -133,6 +133,18 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.p-x9.ccanimator.pref</string>
+			<key>key</key>
+			<string>isCCBackgroundBlurEnabled</string>
+			<key>label</key>
+			<string>CC Background Blur</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string></string>
 			<key>label</key>
 			<string>Border Width</string>

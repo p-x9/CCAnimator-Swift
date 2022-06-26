@@ -79,6 +79,12 @@ class CCUIModularControlCenterOverlayViewController_Hook: ClassHook<CCUIModularC
     
     typealias Group = customTweak
     
+    func viewDidLoad() {
+        orig.viewDidLoad()
+        
+        target.overlayBackgroundView.isBlurEnabled = localSettings.isCCBackgroundBlurEnabled
+    }
+    
     func viewWillDisappear(_ animated: Bool) {
         orig.viewWillDisappear(animated)
         

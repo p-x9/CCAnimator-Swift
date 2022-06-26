@@ -22,6 +22,7 @@ struct Settings: Codable {
         case itemCornerRadius
         
         case ccBackgroundColorCode
+        case isCCBackgroundBlurEnabled
         
         case isAnimationEnabled
         case animationRawValue
@@ -41,6 +42,7 @@ struct Settings: Codable {
     var itemCornerRadius: CGFloat = 19
     
     var ccBackgroundColorCode: String = "#0000FF:0.50"
+    var isCCBackgroundBlurEnabled: Bool = true
     
     var isAnimationEnabled: Bool = true
     var animationRawValue: Int = 0
@@ -63,6 +65,7 @@ struct Settings: Codable {
         itemCornerRadius = try container.decodeIfPresent(CGFloat.self, forKey: .itemCornerRadius) ?? 19
         
         ccBackgroundColorCode = try container.decodeIfPresent(String.self, forKey: .ccBackgroundColorCode) ?? "#0000FF:0.50"
+        isCCBackgroundBlurEnabled = try container.decodeIfPresent(Bool.self, forKey: .isCCBackgroundBlurEnabled) ?? true
         
         isAnimationEnabled = try container.decodeIfPresent(Bool.self, forKey: .isAnimationEnabled) ?? true
         animationRawValue = try container.decodeIfPresent(Int.self, forKey: .animationRawValue) ?? 0

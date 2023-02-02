@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.7
 
 import PackageDescription
 import Foundation
@@ -54,14 +54,14 @@ let libFlags: [String] = [
 
 let cFlags: [String] = libFlags + [
     "-target", triple, "-isysroot", sdk,
-    "-Wno-unused-command-line-argument", "-Qunused-arguments",
+    "-Wno-unused-command-line-argument", "-Qunused-arguments"
 ]
 
 let cxxFlags: [String] = [
 ]
 
 let swiftFlags: [String] = libFlags + [
-    "-target", triple, "-sdk", sdk, "-resource-dir", resourceDir,
+    "-target", triple, "-sdk", sdk, "-resource-dir", resourceDir
 ]
 
 let package = Package(
@@ -71,7 +71,7 @@ let package = Package(
         .library(
             name: "CCAnimator",
             targets: ["CCAnimator"]
-        ),
+        )
     ],
     targets: [
         .target(
@@ -83,6 +83,6 @@ let package = Package(
             name: "CCAnimator",
             dependencies: ["CCAnimatorC"],
             swiftSettings: [.unsafeFlags(swiftFlags)]
-        ),
+        )
     ]
 )
